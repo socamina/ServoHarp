@@ -12,17 +12,16 @@ class AppServos {
 
   onMessage(event, message) {
 
+    if(message.content == "tonemoji"){
       document.body.classList.add("isBot");
       setTimeout(function(){document.body.classList.remove("isBot")}, 2000);
-  
-      // document.body.classList.remove("isBot2");
-   
-    document.body.innerHTML = message;
-
-//   console.log(message);
-//  var screenMessage = document.getElementById("screenMessage");
-// console.log(screenMessage);
-// screenMessage.innerHTML = message;
+      document.body.innerHTML = message.content;
+    } 
+    if(message.content == "pong"){
+      document.body.classList.add("isBot");
+      setTimeout(function(){document.body.classList.remove("isBot")}, 2000);
+      document.body.innerHTML = message.content;
+    }
   }
 }
 

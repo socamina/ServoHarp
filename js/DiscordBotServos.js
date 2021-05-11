@@ -11,6 +11,7 @@ class DiscordBotServos {
     this.client.on("message", this.onMessage.bind(this));
     this.client.login(token);
     this.users = [];
+    this.usersIndex  = {};
     this.initArduino();
   }
 
@@ -55,35 +56,36 @@ class DiscordBotServos {
 
   onReady() {
     console.log("BOT READY");
+    this.list = this.client.guilds.cache.get("836975500043616294");
+    //console.log(this.list);
+    this.list.members.cache.forEach(member => this.users.push(member.user.username)); 
+    console.log(this.users);
+    this.users.pop();
+    console.log(this.users);
   }
 
-  onMessage(message) {
-    const receivedEmbed = message.embeds[0];
-    //console.log(message.content);
-    //console.log("YO")
+  onMessage(message) {     
+      var messageInfo ={
+        content: message.content,
+        author: message.author.username
+      }
+      this.win.webContents.send("messageDiscord", messageInfo);
 
-    if(receivedEmbed){
-      this.win.webContents.send("messageDiscord", receivedEmbed);
-    } else {
-      this.win.webContents.send("messageDiscord", message.content);
+      if(message.author.username == this.users[0]){
+        console.log("user0 sent a message");
+        //servos arpèges
+      } 
+      else if(message.author.username == this.users[1]){
+        console.log("user1 sent a message");
+      } 
+      // else if(message.author.username == this.users[2]){
+      //   console.log("user2 sent a message");
+      // }
+      //rajouter ici 2 joueurs supplémentaire quand tu les ajouteras dans le serveur
 
-      var members = message.guild.members;
-      members.fetch().then(data => {
-        data.forEach(member => {
-          this.users.push(member);
-        });
-          for(let i=0; i<this.users.length; i++){
-            //console.log(this.users[i].username);
-           // console.log(this.users[i].user.id);
-            console.log(this.users[i].user.username);
-          }
-          //console.log(`Added ${member.displayName} to users`);
-        });
-        //console.log(this.users.length);
-        
-     
+
       
-
+      //console.log(messageInfo);
 
       if(this.angle1==0 && message.content == "1"){
         this.angle1+=30
@@ -182,15 +184,20 @@ class DiscordBotServos {
         console.log(this.angle8);
       } 
 
-      // if(message.content == "R"){
+
+
+      if(message.content == "click"){
+        const answer = "pong";
+        message.channel.send(answer);
+      }
+
+      // if(message.content == "boutton"){
      
       //   this.angle-=10
       //   this.servo.to(this.angle);
       //   console.log(this.angle);
       // }
-    }
-
-    this.users = [];
+    
   }
 }
 
