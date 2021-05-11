@@ -12,6 +12,8 @@ class AppServos {
 
   onMessage(event, message) {
 
+    document.body.innerHTML = message.content;
+
     if(message.content == "tonemoji"){
       document.body.classList.add("isBot");
       setTimeout(function(){document.body.classList.remove("isBot")}, 2000);

@@ -25,24 +25,24 @@ class DiscordBotServos {
     console.log("Board ready");
     //this.servo = new Servo(7);
 
-    this.servo1 = new Servo(3);
-    this.servo2 = new Servo(4);
-    this.servo3 = new Servo(5);
-    this.servo4 = new Servo(6);
+    this.servo1 = new Servo(12);
+    this.servo2 = new Servo(11);
+    this.servo3 = new Servo(10);
+    this.servo4 = new Servo(9);
     // this.servo5 = new Servo(6);
     // this.servo6 = new Servo(5);
     // this.servo7= new Servo(4);
     // this.servo8 = new Servo(3);
 
-  //   this.servo1.center();
-  //   this.servo2.center();
-  //   this.servo3.center();
-  //   this.servo4.center();
-  //   this.servo5.center();
-  //   this.servo6.center();
-  //   this.servo7.center();
-  //   this.servo8.center();
-  //  delay(100);   
+    //  this.servo1.center();
+    //  this.servo2.center();
+    //  this.servo3.center();
+    //  this.servo4.center();
+    // this.servo5.center();
+    // this.servo6.center();
+    // this.servo7.center();
+    // this.servo8.center();
+    // delay(100);   
 
     this.angle1 = 0;
     this.angle2 = 0;
@@ -71,17 +71,53 @@ class DiscordBotServos {
       }
       this.win.webContents.send("messageDiscord", messageInfo);
 
-      if(message.author.username == this.users[0]){
-        console.log("user0 sent a message");
-        //servos arpèges
-      } 
-      else if(message.author.username == this.users[1]){
-        console.log("user1 sent a message");
-      } 
+      // if(message.author.username == this.users[0]){
+      //   console.log("user0 sent a message");
+      //   //servos arpèges
+      // } 
+      // else if(message.author.username == this.users[1]){
+      //   console.log("user1 sent a message");
+      // } 
+
+
+      if (message.author.username == this.users[1] && this.angle1 == 0) {
+        this.angle1 += 30;
+        this.servo1.to(this.angle1);
+  
+        setTimeout(function () {
+          this.servo2.to(this.angle1);
+        }, 100);
+  
+        setTimeout(function () {
+          this.servo3.to(this.angle1);
+        }, 100);
+  
+        setTimeout(function () {
+          this.servo4.to(this.angle1);
+          console.log(this.angle1);
+        }, 100);
+      } else if(message.author.username == this.users[1] && this.angle1==30){
+        this.angle1 -= 30;
+        this.servo1.to(this.angle1);
+  
+        setTimeout(function () {
+          this.servo2.to(this.angle1);
+        }, 100);
+  
+        setTimeout(function () {
+          this.servo3.to(this.angle1);
+        }, 100);
+  
+        setTimeout(function () {
+          this.servo4.to(this.angle1);
+          console.log(this.angle1);
+        }, 100);
+      }
+
       // else if(message.author.username == this.users[2]){
       //   console.log("user2 sent a message");
       // }
-      //rajouter ici 2 joueurs supplémentaire quand tu les ajouteras dans le serveur
+      //rajouter ici 2 joueurs supplémentaire quand ajoutés dans le serveur
 
 
       
