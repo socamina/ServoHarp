@@ -71,16 +71,17 @@ class DiscordBotServos {
       members.fetch().then(data => {
         data.forEach(member => {
           this.users.push(member);
+        });
           for(let i=0; i<this.users.length; i++){
             //console.log(this.users[i].username);
-            console.log(this.users[i].user.id);
+           // console.log(this.users[i].user.id);
             console.log(this.users[i].user.username);
           }
           //console.log(`Added ${member.displayName} to users`);
         });
         //console.log(this.users.length);
         
-      });
+     
       
 
 
