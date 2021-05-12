@@ -322,6 +322,7 @@ class DiscordBotServos {
 
     if (this.angle5 == 0 && message.content == "5") {
       //console.log(this.servo);
+      console.log(messageInfo);
       this.angle5 += 30;
       this.servo5.to(this.angle5);
       console.log(this.angle5);

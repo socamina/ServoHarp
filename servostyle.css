@@ -8,7 +8,7 @@
      flex-direction: column;
      align-items: center;
      justify-content: center;
-     font-size : 150px;
+     font-size : 100px;
      background-color:black;
      color:white;
      font-family: 'Inter', sans-serif;
@@ -21,13 +21,13 @@
     justify-content: center }
     
 .container p {
-    font-size : 150px;
+    font-size : 100px;
     margin: 0 }
 
 
     .isBot{
         background-color: black;
-        font-size : 150px;
+        font-size : 100px;
         animation: bigger 1.5s  ease-in;  
     }
 
@@ -38,7 +38,7 @@
 
       .isBot2{
         background-color: black;
-        font-size : 270px;
+        font-size : 150px;
         animation: little 1.5s  ease-in;  
     }
 
