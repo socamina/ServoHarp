@@ -32,7 +32,7 @@ class DiscordBotServos {
     this.servo2 = new Servo(11);
     this.servo3 = new Servo(10);
     this.servo4 = new Servo(9);
-    this.servo5 = new Servo(12);
+    this.servo5 = new Servo(8);
     this.servo6 = new Servo(7);
     this.servo7 = new Servo(6);
     this.servo8 = new Servo(5);
@@ -62,6 +62,10 @@ class DiscordBotServos {
     this.servo10.center();
     this.servo11.center();
     this.servo12.center();
+
+    setTimeout(function () {
+      console.log("j'attend");
+    }, 6000);
     // delay(100);
   }
 
@@ -130,39 +134,39 @@ class DiscordBotServos {
     }
 
     // USER 1
-    if (message.author.username == this.users[1] && this.angle1 == 0) {
-      this.angle1 += 30;
-      this.servo2.to(this.angle1);
+    // if (message.author.username == this.users[1] && this.angle1 == 0) {
+    //   this.angle1 += 30;
+    //   this.servo2.to(this.angle1);
 
-      var that = this;
-      setTimeout(function () {
-        that.servo4.to(that.angle1);
-      }, 2000);
+    //   var that = this;
+    //   setTimeout(function () {
+    //     that.servo4.to(that.angle1);
+    //   }, 2000);
 
-      setTimeout(function () {
-        that.servo6.to(that.angle1);
-      }, 4000);
+    //   setTimeout(function () {
+    //     that.servo6.to(that.angle1);
+    //   }, 4000);
 
-      setTimeout(function () {
-        that.servo9.to(that.angle1);
-      }, 6000);
-    } else if (message.author.username == this.users[1] && this.angle1 == 30) {
-      this.angle1 -= 30;
-      this.servo2.to(this.angle1);
+    //   setTimeout(function () {
+    //     that.servo9.to(that.angle1);
+    //   }, 6000);
+    // } else if (message.author.username == this.users[1] && this.angle1 == 30) {
+    //   this.angle1 -= 30;
+    //   this.servo2.to(this.angle1);
 
-      var that = this;
-      setTimeout(function () {
-        that.servo4.to(that.angle1);
-      }, 2000);
+    //   var that = this;
+    //   setTimeout(function () {
+    //     that.servo4.to(that.angle1);
+    //   }, 2000);
 
-      setTimeout(function () {
-        that.servo6.to(that.angle1);
-      }, 4000);
+    //   setTimeout(function () {
+    //     that.servo6.to(that.angle1);
+    //   }, 4000);
 
-      setTimeout(function () {
-        that.servo9.to(that.angle1);
-      }, 6000);
-    }
+    //   setTimeout(function () {
+    //     that.servo9.to(that.angle1);
+    //   }, 6000);
+    // }
 
     // USER 2
     if (message.author.username == this.users[2] && this.angle1 == 0) {
@@ -318,7 +322,7 @@ class DiscordBotServos {
 
     if (this.angle5 == 0 && message.content == "5") {
       //console.log(this.servo);
-      this.angle5 += 20;
+      this.angle5 += 30;
       this.servo5.to(this.angle5);
       console.log(this.angle5);
     } else if (this.angle5 == 30 && message.content == "5") {
@@ -328,7 +332,7 @@ class DiscordBotServos {
     }
 
     if (this.angle6 == 0 && message.content == "6") {
-      this.angle6 += 20;
+      this.angle6 += 30;
       this.servo6.to(this.angle6);
       console.log(this.angle6);
     } else if (this.angle6 == 30 && message.content == "6") {
@@ -339,7 +343,7 @@ class DiscordBotServos {
 
     if (this.angle7 == 0 && message.content == "7") {
       //console.log(this.servo);
-      this.angle7 += 20;
+      this.angle7 += 30;
       this.servo7.to(this.angle7);
       console.log(this.angle7);
     } else if (this.angle7 == 30 && message.content == "7") {
@@ -350,7 +354,7 @@ class DiscordBotServos {
 
     if (this.angle8 == 0 && message.content == "8") {
       //console.log(this.servo);
-      this.angle8 += 20;
+      this.angle8 += 30;
       this.servo8.to(this.angle8);
       console.log(this.angle8);
     } else if (this.angle8 == 30 && message.content == "8") {
@@ -361,7 +365,7 @@ class DiscordBotServos {
 
     if (this.angle9 == 0 && message.content == "9") {
       //console.log(this.servo);
-      this.angle9 += 20;
+      this.angle9 += 30;
       this.servo9.to(this.angle9);
       console.log(this.angle9);
     } else if (this.angle9 == 30 && message.content == "9") {
@@ -372,7 +376,7 @@ class DiscordBotServos {
 
     if (this.angle10 == 0 && message.content == "10") {
       //console.log(this.servo);
-      this.angle10 += 20;
+      this.angle10 += 30;
       this.servo10.to(this.angle10);
       console.log(this.angle10);
     } else if (this.angle10 == 30 && message.content == "10") {
@@ -383,7 +387,7 @@ class DiscordBotServos {
 
     if (this.angle11 == 0 && message.content == "11") {
       //console.log(this.servo);
-      this.angle11 += 20;
+      this.angle11 += 30;
       this.servo11.to(this.angle11);
       console.log(this.angle11);
     } else if (this.angle11 == 30 && message.content == "11") {
@@ -394,7 +398,7 @@ class DiscordBotServos {
 
     if (this.angle12 == 0 && message.content == "12") {
       //console.log(this.servo);
-      this.angle12 += 20;
+      this.angle12 += 30;
       this.servo12.to(this.angle12);
       console.log(this.angle12);
     } else if (this.angle12 == 30 && message.content == "12") {
