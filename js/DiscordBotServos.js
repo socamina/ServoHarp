@@ -1,5 +1,5 @@
 const { Client, MessageEmbed } = require("discord.js");
-const { Board, Servo } = require("johnny-five");
+const { Board, Servo, Button } = require("johnny-five");
 
 class DiscordBotServos {
   constructor(token, win) {
@@ -12,34 +12,53 @@ class DiscordBotServos {
     this.client.login(token);
     this.users = [];
     this.usersIndex = {};
+    this.board;
     // this.servo1;
     // this.servo2;
     // this.servo3;
     // this.servo4;
+    this.button;
     this.initArduino();
   }
 
   initArduino() {
-    this.board = new Board({ repl: false });
+    this.board = new Board({ repl: true });
     this.board.on("ready", this.onBoardReady.bind(this));
+
     console.log("BOARD STARTED");
+  }
+
+  pushButton() {
+    console.log("button pushed");
   }
 
   onBoardReady() {
     console.log("Board ready");
+    this.button = new Button(2);
+    this.board.repl.inject({
+      button: this.button,
+    });
 
-    this.servo1 = new Servo(12);
-    this.servo2 = new Servo(11);
-    this.servo3 = new Servo(10);
+    var channel = this.client.channels.cache.get('836975500525174804');
+    
+    this.button.on("down", function() {
+      //console.log(channel);
+      //console.log("heello mdr");
+      channel.send("ceci est un message");
+    });
+
+    this.servo1 = new Servo(3);
+    this.servo2 = new Servo(5);
+    this.servo3 = new Servo(6);
     this.servo4 = new Servo(9);
-    this.servo5 = new Servo(8);
-    this.servo6 = new Servo(7);
-    this.servo7 = new Servo(6);
-    this.servo8 = new Servo(5);
-    this.servo9 = new Servo(4);
-    this.servo10 = new Servo(3);
-    this.servo11 = new Servo(2);
-    this.servo12 = new Servo(1);
+    this.servo5 = new Servo(10);
+    this.servo6 = new Servo(11);
+    // this.servo7 = new Servo(6);
+    // this.servo8 = new Servo(5);
+    // this.servo9 = new Servo(4);
+    // this.servo10 = new Servo(3);
+    // this.servo11 = new Servo(2);
+    // this.servo12 = new Servo(1);
 
     this.angle1 = 0;
     this.angle2 = 0;
@@ -47,8 +66,8 @@ class DiscordBotServos {
     this.angle4 = 0;
     this.angle5 = 0;
     this.angle6 = 0;
-    this.angle7 = 0;
-    this.angle8 = 0;
+    // this.angle7 = 0;
+    // this.angle8 = 0;
 
     this.servo1.center();
     this.servo2.center();
@@ -56,12 +75,12 @@ class DiscordBotServos {
     this.servo4.center();
     this.servo5.center();
     this.servo6.center();
-    this.servo7.center();
-    this.servo8.center();
-    this.servo9.center();
-    this.servo10.center();
-    this.servo11.center();
-    this.servo12.center();
+    // this.servo7.center();
+    // this.servo8.center();
+    // this.servo9.center();
+    // this.servo10.center();
+    // this.servo11.center();
+    // this.servo12.center();
 
     setTimeout(function () {
       console.log("j'attend");
@@ -112,9 +131,9 @@ class DiscordBotServos {
         that.servo5.to(that.angle1);
       }, 4000);
 
-      setTimeout(function () {
-        that.servo8.to(that.angle1);
-      }, 6000);
+      // setTimeout(function () {
+      //   that.servo8.to(that.angle1);
+      // }, 6000);
     } else if (message.author.username == this.users[0] && this.angle1 == 30) {
       this.angle1 -= 30;
       this.servo1.to(this.angle1);
@@ -128,152 +147,150 @@ class DiscordBotServos {
         that.servo5.to(that.angle1);
       }, 4000);
 
-      setTimeout(function () {
-        that.servo8.to(that.angle1);
-      }, 6000);
+      // setTimeout(function () {
+      //   that.servo8.to(that.angle1);
+      // }, 6000);
     }
 
     // USER 1
-    // if (message.author.username == this.users[1] && this.angle1 == 0) {
+    if (message.author.username == this.users[1] && this.angle1 == 0) {
+      this.angle1 += 30;
+      this.servo2.to(this.angle1);
+
+      var that = this;
+      setTimeout(function () {
+        that.servo4.to(that.angle1);
+      }, 2000);
+
+      setTimeout(function () {
+        that.servo6.to(that.angle1);
+      }, 4000);
+
+      // setTimeout(function () {
+      //   that.servo9.to(that.angle1);
+      // }, 6000);
+    } else if (message.author.username == this.users[1] && this.angle1 == 30) {
+      this.angle1 -= 30;
+      this.servo2.to(this.angle1);
+
+      var that = this;
+      setTimeout(function () {
+        that.servo4.to(that.angle1);
+      }, 2000);
+
+      setTimeout(function () {
+        that.servo6.to(that.angle1);
+      }, 4000);
+
+      // setTimeout(function () {
+      //   that.servo9.to(that.angle1);
+      // }, 6000);
+    }
+
+    // USER 2
+    // if (message.author.username == this.users[2] && this.angle1 == 0) {
     //   this.angle1 += 30;
-    //   this.servo2.to(this.angle1);
+    //   this.servo3.to(this.angle1);
 
     //   var that = this;
     //   setTimeout(function () {
-    //     that.servo4.to(that.angle1);
+    //     that.servo5.to(that.angle1);
     //   }, 2000);
 
     //   setTimeout(function () {
-    //     that.servo6.to(that.angle1);
+    //     that.servo7.to(that.angle1);
     //   }, 4000);
 
     //   setTimeout(function () {
-    //     that.servo9.to(that.angle1);
+    //     that.servo10.to(that.angle1);
     //   }, 6000);
-    // } else if (message.author.username == this.users[1] && this.angle1 == 30) {
+    // } else if (message.author.username == this.users[2] && this.angle1 == 30) {
     //   this.angle1 -= 30;
-    //   this.servo2.to(this.angle1);
+    //   this.servo3.to(this.angle1);
 
     //   var that = this;
     //   setTimeout(function () {
-    //     that.servo4.to(that.angle1);
+    //     that.servo5.to(that.angle1);
     //   }, 2000);
 
     //   setTimeout(function () {
-    //     that.servo6.to(that.angle1);
+    //     that.servo7.to(that.angle1);
     //   }, 4000);
 
     //   setTimeout(function () {
-    //     that.servo9.to(that.angle1);
+    //     that.servo10.to(that.angle1);
     //   }, 6000);
     // }
 
-    // USER 2
-    if (message.author.username == this.users[2] && this.angle1 == 0) {
-      this.angle1 += 30;
-      this.servo3.to(this.angle1);
-
-      var that = this;
-      setTimeout(function () {
-        that.servo5.to(that.angle1);
-      }, 2000);
-
-      setTimeout(function () {
-        that.servo7.to(that.angle1);
-      }, 4000);
-
-      setTimeout(function () {
-        that.servo10.to(that.angle1);
-      }, 6000);
-    } else if (message.author.username == this.users[2] && this.angle1 == 30) {
-      this.angle1 -= 30;
-      this.servo3.to(this.angle1);
-
-      var that = this;
-      setTimeout(function () {
-        that.servo5.to(that.angle1);
-      }, 2000);
-
-      setTimeout(function () {
-        that.servo7.to(that.angle1);
-      }, 4000);
-
-      setTimeout(function () {
-        that.servo10.to(that.angle1);
-      }, 6000);
-    }
-
     // USER 3
-    if (message.author.username == this.users[2] && this.angle1 == 0) {
-      this.angle1 += 30;
-      this.servo4.to(this.angle1);
+    // if (message.author.username == this.users[2] && this.angle1 == 0) {
+    //   this.angle1 += 30;
+    //   this.servo4.to(this.angle1);
 
-      var that = this;
-      setTimeout(function () {
-        that.servo6.to(that.angle1);
-      }, 2000);
+    //   var that = this;
+    //   setTimeout(function () {
+    //     that.servo6.to(that.angle1);
+    //   }, 2000);
 
-      setTimeout(function () {
-        that.servo8.to(that.angle1);
-      }, 4000);
+    //   setTimeout(function () {
+    //     that.servo8.to(that.angle1);
+    //   }, 4000);
 
-      setTimeout(function () {
-        that.servo11.to(that.angle1);
-      }, 6000);
-    } else if (message.author.username == this.users[2] && this.angle1 == 30) {
-      this.angle1 -= 30;
-      this.servo4.to(this.angle1);
+    //   setTimeout(function () {
+    //     that.servo11.to(that.angle1);
+    //   }, 6000);
+    // } else if (message.author.username == this.users[2] && this.angle1 == 30) {
+    //   this.angle1 -= 30;
+    //   this.servo4.to(this.angle1);
 
-      var that = this;
-      setTimeout(function () {
-        that.servo6.to(that.angle1);
-      }, 2000);
+    //   var that = this;
+    //   setTimeout(function () {
+    //     that.servo6.to(that.angle1);
+    //   }, 2000);
 
-      setTimeout(function () {
-        that.servo8.to(that.angle1);
-      }, 4000);
+    //   setTimeout(function () {
+    //     that.servo8.to(that.angle1);
+    //   }, 4000);
 
-      setTimeout(function () {
-        that.servo11.to(that.angle1);
-      }, 6000);
-    }
+    //   setTimeout(function () {
+    //     that.servo11.to(that.angle1);
+    //   }, 6000);
+    // }
 
     // USER 4
-    if (message.author.username == this.users[2] && this.angle1 == 0) {
-      this.angle1 += 30;
-      this.servo5.to(this.angle1);
+    // if (message.author.username == this.users[2] && this.angle1 == 0) {
+    //   this.angle1 += 30;
+    //   this.servo5.to(this.angle1);
 
-      var that = this;
-      setTimeout(function () {
-        that.servo7.to(that.angle1);
-      }, 2000);
+    //   var that = this;
+    //   setTimeout(function () {
+    //     that.servo7.to(that.angle1);
+    //   }, 2000);
 
-      setTimeout(function () {
-        that.servo9.to(that.angle1);
-      }, 4000);
+    //   setTimeout(function () {
+    //     that.servo9.to(that.angle1);
+    //   }, 4000);
 
-      setTimeout(function () {
-        that.servo12.to(that.angle1);
-      }, 6000);
-    } else if (message.author.username == this.users[2] && this.angle1 == 30) {
-      this.angle1 -= 30;
-      this.servo5.to(this.angle1);
+    //   setTimeout(function () {
+    //     that.servo12.to(that.angle1);
+    //   }, 6000);
+    // } else if (message.author.username == this.users[2] && this.angle1 == 30) {
+    //   this.angle1 -= 30;
+    //   this.servo5.to(this.angle1);
 
-      var that = this;
-      setTimeout(function () {
-        that.servo7.to(that.angle1);
-      }, 2000);
+    //   var that = this;
+    //   setTimeout(function () {
+    //     that.servo7.to(that.angle1);
+    //   }, 2000);
 
-      setTimeout(function () {
-        that.servo9.to(that.angle1);
-      }, 4000);
+    //   setTimeout(function () {
+    //     that.servo9.to(that.angle1);
+    //   }, 4000);
 
-      setTimeout(function () {
-        that.servo12.to(that.angle1);
-      }, 6000);
-    }
-
-
+    //   setTimeout(function () {
+    //     that.servo12.to(that.angle1);
+    //   }, 6000);
+    // }
 
     // EMOJI PARTS
 
@@ -342,81 +359,85 @@ class DiscordBotServos {
       console.log(this.angle6);
     }
 
-    if (this.angle7 == 0 && message.content == "7") {
-      //console.log(this.servo);
-      this.angle7 += 30;
-      this.servo7.to(this.angle7);
-      console.log(this.angle7);
-    } else if (this.angle7 == 30 && message.content == "7") {
-      this.angle7 -= 30;
-      this.servo7.to(this.angle7);
-      console.log(this.angle7);
-    }
+    // if (this.angle7 == 0 && message.content == "7") {
+    //   //console.log(this.servo);
+    //   this.angle7 += 30;
+    //   this.servo7.to(this.angle7);
+    //   console.log(this.angle7);
+    // } else if (this.angle7 == 30 && message.content == "7") {
+    //   this.angle7 -= 30;
+    //   this.servo7.to(this.angle7);
+    //   console.log(this.angle7);
+    // }
 
-    if (this.angle8 == 0 && message.content == "8") {
-      //console.log(this.servo);
-      this.angle8 += 30;
-      this.servo8.to(this.angle8);
-      console.log(this.angle8);
-    } else if (this.angle8 == 30 && message.content == "8") {
-      this.angle8 -= 30;
-      this.servo8.to(this.angle8);
-      console.log(this.angle8);
-    }
+    // if (this.angle8 == 0 && message.content == "8") {
+    //   //console.log(this.servo);
+    //   this.angle8 += 30;
+    //   this.servo8.to(this.angle8);
+    //   console.log(this.angle8);
+    // } else if (this.angle8 == 30 && message.content == "8") {
+    //   this.angle8 -= 30;
+    //   this.servo8.to(this.angle8);
+    //   console.log(this.angle8);
+    // }
 
-    if (this.angle9 == 0 && message.content == "9") {
-      //console.log(this.servo);
-      this.angle9 += 30;
-      this.servo9.to(this.angle9);
-      console.log(this.angle9);
-    } else if (this.angle9 == 30 && message.content == "9") {
-      this.angle9 -= 30;
-      this.servo9.to(this.angle9);
-      console.log(this.angle9);
-    }
+    // if (this.angle9 == 0 && message.content == "9") {
+    //   //console.log(this.servo);
+    //   this.angle9 += 30;
+    //   this.servo9.to(this.angle9);
+    //   console.log(this.angle9);
+    // } else if (this.angle9 == 30 && message.content == "9") {
+    //   this.angle9 -= 30;
+    //   this.servo9.to(this.angle9);
+    //   console.log(this.angle9);
+    // }
 
-    if (this.angle10 == 0 && message.content == "10") {
-      //console.log(this.servo);
-      this.angle10 += 30;
-      this.servo10.to(this.angle10);
-      console.log(this.angle10);
-    } else if (this.angle10 == 30 && message.content == "10") {
-      this.angle10 -= 30;
-      this.servo10.to(this.angle10);
-      console.log(this.angle10);
-    }
+    // if (this.angle10 == 0 && message.content == "10") {
+    //   //console.log(this.servo);
+    //   this.angle10 += 30;
+    //   this.servo10.to(this.angle10);
+    //   console.log(this.angle10);
+    // } else if (this.angle10 == 30 && message.content == "10") {
+    //   this.angle10 -= 30;
+    //   this.servo10.to(this.angle10);
+    //   console.log(this.angle10);
+    // }
 
-    if (this.angle11 == 0 && message.content == "11") {
-      //console.log(this.servo);
-      this.angle11 += 30;
-      this.servo11.to(this.angle11);
-      console.log(this.angle11);
-    } else if (this.angle11 == 30 && message.content == "11") {
-      this.angle11 -= 30;
-      this.servo11.to(this.angle11);
-      console.log(this.angle11);
-    }
+    // if (this.angle11 == 0 && message.content == "11") {
+    //   //console.log(this.servo);
+    //   this.angle11 += 30;
+    //   this.servo11.to(this.angle11);
+    //   console.log(this.angle11);
+    // } else if (this.angle11 == 30 && message.content == "11") {
+    //   this.angle11 -= 30;
+    //   this.servo11.to(this.angle11);
+    //   console.log(this.angle11);
+    // }
 
-    if (this.angle12 == 0 && message.content == "12") {
-      //console.log(this.servo);
-      this.angle12 += 30;
-      this.servo12.to(this.angle12);
-      console.log(this.angle12);
-    } else if (this.angle12 == 30 && message.content == "12") {
-      this.angle12 -= 30;
-      this.servo12.to(this.angle12);
-      console.log(this.angle12);
-    }
+    // if (this.angle12 == 0 && message.content == "12") {
+    //   //console.log(this.servo);
+    //   this.angle12 += 30;
+    //   this.servo12.to(this.angle12);
+    //   console.log(this.angle12);
+    // } else if (this.angle12 == 30 && message.content == "12") {
+    //   this.angle12 -= 30;
+    //   this.servo12.to(this.angle12);
+    //   console.log(this.angle12);
+    // }
 
     //BUTTON RESPONSE
-    if (message.content == "click") {
-      const answer = "pong";
-      message.channel.send(answer);
-    }
-  }
-  ontest() {
-    this.servo2.to(this.angle1);
-    console.log(this.servo2);
+
+    // button.on("down", function() {
+    //   console.log("down");
+    // });
+
+
+    // if (message.content == "help") {
+    //   const answer = "je ne suis pas disponible pour le moment";
+    //   message.channel.send(answer);
+    // }
+
+
   }
 }
 
