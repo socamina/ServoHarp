@@ -53,7 +53,7 @@ class DiscordBotServos {
     this.servo4 = new Servo(9);
     this.servo5 = new Servo(10);
     this.servo6 = new Servo(11);
-    // this.servo7 = new Servo(6);
+   this.servo7 = new Servo(7);
     // this.servo8 = new Servo(5);
     // this.servo9 = new Servo(4);
     // this.servo10 = new Servo(3);
@@ -359,16 +359,16 @@ class DiscordBotServos {
       console.log(this.angle6);
     }
 
-    // if (this.angle7 == 0 && message.content == "7") {
-    //   //console.log(this.servo);
-    //   this.angle7 += 30;
-    //   this.servo7.to(this.angle7);
-    //   console.log(this.angle7);
-    // } else if (this.angle7 == 30 && message.content == "7") {
-    //   this.angle7 -= 30;
-    //   this.servo7.to(this.angle7);
-    //   console.log(this.angle7);
-    // }
+    if (this.angle7 == 0 && message.content == "7") {
+      //console.log(this.servo);
+      this.angle7 += 30;
+      this.servo7.to(this.angle7);
+      console.log(this.angle7);
+    } else if (this.angle7 == 30 && message.content == "7") {
+      this.angle7 -= 30;
+      this.servo7.to(this.angle7);
+      console.log(this.angle7);
+    }
 
     // if (this.angle8 == 0 && message.content == "8") {
     //   //console.log(this.servo);
