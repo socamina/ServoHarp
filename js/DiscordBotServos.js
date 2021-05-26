@@ -1,5 +1,5 @@
 const { Client, MessageEmbed } = require("discord.js");
-const { Board, Servo, Button } = require("johnny-five");
+const { Board, Servo, Button, Servos } = require("johnny-five");
 
 class DiscordBotServos {
   constructor(token, win) {
@@ -13,6 +13,8 @@ class DiscordBotServos {
     this.users = [];
     this.usersIndex = {};
     this.board;
+
+    this.enabled = false;
     // this.servo1;
     // this.servo2;
     // this.servo3;
@@ -32,60 +34,49 @@ class DiscordBotServos {
     console.log("button pushed");
   }
 
-  onBoardReady() {
+  async onBoardReady() {
     console.log("Board ready");
-    this.button = new Button(2);
+
+    const channel = this.client.channels.cache.get("836975500525174804");
+
+    this.button = new Button(14);
+    this.servos = new Servos([
+      { pin: 2, invert: true },
+      { pin: 3 },
+      { pin: 4, invert: true },
+      { pin: 5 },
+      { pin: 6, invert: true },
+      { pin: 7 },
+      { pin: 8, invert: true },
+      { pin: 9 },
+      { pin: 10, invert: true },
+      { pin: 11 },
+      { pin: 12, invert: true },
+      { pin: 13 },
+    ]);
+
+    this.angles = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90];
+
+    this.button.on("down", () => {
+      if (this.enabled) {
+        channel.send("Je vous réponds plus tard.");
+      } else {
+        console.log("button enabled");
+        this.enabled = true;
+      }
+    });
+
     this.board.repl.inject({
       button: this.button,
+      servos: this.servos,
     });
 
-    var channel = this.client.channels.cache.get('836975500525174804');
-    
-    this.button.on("down", function() {
-      //console.log(channel);
-      //console.log("heello mdr");
-      channel.send("ceci est un message");
+    this.servos.each((servo, index) => {
+      this.resyncServo(index);
     });
 
-    this.servo1 = new Servo(3);
-    this.servo2 = new Servo(5);
-    this.servo3 = new Servo(6);
-    this.servo4 = new Servo(9);
-    this.servo5 = new Servo(10);
-    this.servo6 = new Servo(11);
-   this.servo7 = new Servo(7);
-    // this.servo8 = new Servo(5);
-    // this.servo9 = new Servo(4);
-    // this.servo10 = new Servo(3);
-    // this.servo11 = new Servo(2);
-    // this.servo12 = new Servo(1);
-
-    this.angle1 = 0;
-    this.angle2 = 0;
-    this.angle3 = 0;
-    this.angle4 = 0;
-    this.angle5 = 0;
-    this.angle6 = 0;
-    // this.angle7 = 0;
-    // this.angle8 = 0;
-
-    this.servo1.center();
-    this.servo2.center();
-    this.servo3.center();
-    this.servo4.center();
-    this.servo5.center();
-    this.servo6.center();
-    // this.servo7.center();
-    // this.servo8.center();
-    // this.servo9.center();
-    // this.servo10.center();
-    // this.servo11.center();
-    // this.servo12.center();
-
-    setTimeout(function () {
-      console.log("j'attend");
-    }, 6000);
-    // delay(100);
+    await delay(6000);
+    console.log("j'attend");
   }
 
   onReady() {
@@ -99,331 +90,89 @@ class DiscordBotServos {
     this.users.pop();
     console.log(this.users);
   }
+  async arpege(accord, { duration = 2000 } = {}) {
+    for (let servoIndex of accord) {
+      this.swipeToOppositeSide(servoIndex);
+      await delay(duration);
+    }
+  }
 
-  onMessage(message) {
+  swipeToOppositeSide(servoIndex, min = 0, max = 180) {
+    const currAngle = this.getAngle(servoIndex);
+    const angle = currAngle > 90 ? min : max;
+    this.toAngle(servoIndex, angle);
+  }
+
+  getAngle(servoIndex) {
+    return this.angles[servoIndex];
+  }
+
+  resyncServo(servoIndex) {
+    // force servo to last saved angle
+    this.toAngle(servoIndex, this.getAngle(servoIndex));
+  }
+
+  toAngle(servoIndex, angle) {
+    this.angles[servoIndex] = angle;
+    this.servos[servoIndex].to(angle);
+  }
+
+  async onMessage(message) {
     var messageInfo = {
       content: message.content,
       author: message.author.username,
     };
+
     this.win.webContents.send("messageDiscord", messageInfo);
 
     // ARPEGE PARTS
 
-    // if(message.author.username == this.users[0]){
-    //   console.log("user0 sent a message");
-    // }
-    // else if(message.author.username == this.users[1]){
-    //   console.log("user1 sent a message");
-    // }
-    //console.log(messageInfo);
-
-    //USER 0
-    if (message.author.username == this.users[0] && this.angle1 == 0) {
-      this.angle1 += 30;
-      this.servo1.to(this.angle1);
-
-      var that = this;
-      setTimeout(function () {
-        that.servo3.to(that.angle1);
-      }, 2000);
-
-      setTimeout(function () {
-        that.servo5.to(that.angle1);
-      }, 4000);
-
-      // setTimeout(function () {
-      //   that.servo8.to(that.angle1);
-      // }, 6000);
-    } else if (message.author.username == this.users[0] && this.angle1 == 30) {
-      this.angle1 -= 30;
-      this.servo1.to(this.angle1);
-
-      var that = this;
-      setTimeout(function () {
-        that.servo3.to(that.angle1);
-      }, 2000);
-
-      setTimeout(function () {
-        that.servo5.to(that.angle1);
-      }, 4000);
-
-      // setTimeout(function () {
-      //   that.servo8.to(that.angle1);
-      // }, 6000);
+    switch (messageInfo.author) {
+      case this.users[0]:
+        await this.arpege([2, 4, 6, 9]);
+        break;
+      case this.users[1]:
+        await this.arpege([2, 4, 6, 9]);
+        break;
+      case this.users[2]:
+        await this.arpege([2, 4, 6, 9]);
+        break;
+      case this.users[3]:
+        await this.arpege([2, 4, 6, 9]);
+        break;
+      case this.users[4]:
+        await this.arpege([2, 4, 6, 9]);
+        break;
     }
-
-    // USER 1
-    if (message.author.username == this.users[1] && this.angle1 == 0) {
-      this.angle1 += 30;
-      this.servo2.to(this.angle1);
-
-      var that = this;
-      setTimeout(function () {
-        that.servo4.to(that.angle1);
-      }, 2000);
-
-      setTimeout(function () {
-        that.servo6.to(that.angle1);
-      }, 4000);
-
-      // setTimeout(function () {
-      //   that.servo9.to(that.angle1);
-      // }, 6000);
-    } else if (message.author.username == this.users[1] && this.angle1 == 30) {
-      this.angle1 -= 30;
-      this.servo2.to(this.angle1);
-
-      var that = this;
-      setTimeout(function () {
-        that.servo4.to(that.angle1);
-      }, 2000);
-
-      setTimeout(function () {
-        that.servo6.to(that.angle1);
-      }, 4000);
-
-      // setTimeout(function () {
-      //   that.servo9.to(that.angle1);
-      // }, 6000);
-    }
-
-    // USER 2
-    // if (message.author.username == this.users[2] && this.angle1 == 0) {
-    //   this.angle1 += 30;
-    //   this.servo3.to(this.angle1);
-
-    //   var that = this;
-    //   setTimeout(function () {
-    //     that.servo5.to(that.angle1);
-    //   }, 2000);
-
-    //   setTimeout(function () {
-    //     that.servo7.to(that.angle1);
-    //   }, 4000);
-
-    //   setTimeout(function () {
-    //     that.servo10.to(that.angle1);
-    //   }, 6000);
-    // } else if (message.author.username == this.users[2] && this.angle1 == 30) {
-    //   this.angle1 -= 30;
-    //   this.servo3.to(this.angle1);
-
-    //   var that = this;
-    //   setTimeout(function () {
-    //     that.servo5.to(that.angle1);
-    //   }, 2000);
-
-    //   setTimeout(function () {
-    //     that.servo7.to(that.angle1);
-    //   }, 4000);
-
-    //   setTimeout(function () {
-    //     that.servo10.to(that.angle1);
-    //   }, 6000);
-    // }
-
-    // USER 3
-    // if (message.author.username == this.users[2] && this.angle1 == 0) {
-    //   this.angle1 += 30;
-    //   this.servo4.to(this.angle1);
-
-    //   var that = this;
-    //   setTimeout(function () {
-    //     that.servo6.to(that.angle1);
-    //   }, 2000);
-
-    //   setTimeout(function () {
-    //     that.servo8.to(that.angle1);
-    //   }, 4000);
-
-    //   setTimeout(function () {
-    //     that.servo11.to(that.angle1);
-    //   }, 6000);
-    // } else if (message.author.username == this.users[2] && this.angle1 == 30) {
-    //   this.angle1 -= 30;
-    //   this.servo4.to(this.angle1);
-
-    //   var that = this;
-    //   setTimeout(function () {
-    //     that.servo6.to(that.angle1);
-    //   }, 2000);
-
-    //   setTimeout(function () {
-    //     that.servo8.to(that.angle1);
-    //   }, 4000);
-
-    //   setTimeout(function () {
-    //     that.servo11.to(that.angle1);
-    //   }, 6000);
-    // }
-
-    // USER 4
-    // if (message.author.username == this.users[2] && this.angle1 == 0) {
-    //   this.angle1 += 30;
-    //   this.servo5.to(this.angle1);
-
-    //   var that = this;
-    //   setTimeout(function () {
-    //     that.servo7.to(that.angle1);
-    //   }, 2000);
-
-    //   setTimeout(function () {
-    //     that.servo9.to(that.angle1);
-    //   }, 4000);
-
-    //   setTimeout(function () {
-    //     that.servo12.to(that.angle1);
-    //   }, 6000);
-    // } else if (message.author.username == this.users[2] && this.angle1 == 30) {
-    //   this.angle1 -= 30;
-    //   this.servo5.to(this.angle1);
-
-    //   var that = this;
-    //   setTimeout(function () {
-    //     that.servo7.to(that.angle1);
-    //   }, 2000);
-
-    //   setTimeout(function () {
-    //     that.servo9.to(that.angle1);
-    //   }, 4000);
-
-    //   setTimeout(function () {
-    //     that.servo12.to(that.angle1);
-    //   }, 6000);
-    // }
 
     // EMOJI PARTS
 
-    if (this.angle1 == 0 && message.content == "1") {
-      this.angle1 += 30;
-      this.servo1.to(this.angle1);
-      console.log(this.angle1);
-    } else if (this.angle1 == 30 && message.content == "1") {
-      this.angle1 -= 30;
-      this.servo1.to(this.angle1);
-      console.log(this.angle1);
+    if (message.content === "reset") {
+      this.servos.each((servo, index) => this.toAngle(servoIndex, 90));
+      // message.channel.send('reset servos to 90 degrees');
+      return;
     }
 
-    if (this.angle2 == 0 && message.content == "2") {
-      //console.log(this.servo);
-      this.angle2 += 30;
-      this.servo2.to(this.angle2);
-      console.log(this.angle2);
-    } else if (this.angle2 == 30 && message.content == "2") {
-      this.angle2 -= 30;
-      this.servo2.to(this.angle2);
-      console.log(this.angle2);
+    if (message.content === "test11") {
+      this.arpege([11, 11, 11, 11]);
+      return;
     }
 
-    if (this.angle3 == 0 && message.content == "3") {
-      //console.log(this.servo);
-      this.angle3 += 30;
-      this.servo3.to(this.angle3);
-      console.log(this.angle3);
-    } else if (this.angle3 >= 30 && message.content == "3") {
-      this.angle3 -= 30;
-      this.servo3.to(this.angle3);
-      console.log(this.angle3);
+    if (message.content === "min") {
+      this.servos.each((servo, index) => this.toAngle(servoIndex, 0));
+      return;
     }
 
-    if (this.angle4 == 0 && message.content == "4") {
-      //console.log(this.servo);
-      this.angle4 += 30;
-      this.servo4.to(this.angle4);
-      console.log(this.angle4);
-    } else if (this.angle4 == 30 && message.content == "4") {
-      this.angle4 -= 30;
-      this.servo4.to(this.angle4);
-      console.log(this.angle4);
+    if (message.content === "max") {
+      this.servos.each((servo, index) => this.toAngle(servoIndex, 180));
+      return;
     }
 
-    if (this.angle5 == 0 && message.content == "5") {
-      //console.log(this.servo);
-      console.log(messageInfo);
-      this.angle5 += 30;
-      this.servo5.to(this.angle5);
-      console.log(this.angle5);
-    } else if (this.angle5 == 30 && message.content == "5") {
-      this.angle5 -= 30;
-      this.servo5.to(this.angle5);
-      console.log(this.angle5);
+    const chars = message.content.split(""); // split into characters (letters, emoji, punctuation)
+
+    for (let char of chars) {
+      await this.playChar(char);
     }
-
-    if (this.angle6 == 0 && message.content == "6") {
-      this.angle6 += 30;
-      this.servo6.to(this.angle6);
-      console.log(this.angle6);
-    } else if (this.angle6 == 30 && message.content == "6") {
-      this.angle6 -= 30;
-      this.servo6.to(this.angle6);
-      console.log(this.angle6);
-    }
-
-    if (this.angle7 == 0 && message.content == "7") {
-      //console.log(this.servo);
-      this.angle7 += 30;
-      this.servo7.to(this.angle7);
-      console.log(this.angle7);
-    } else if (this.angle7 == 30 && message.content == "7") {
-      this.angle7 -= 30;
-      this.servo7.to(this.angle7);
-      console.log(this.angle7);
-    }
-
-    // if (this.angle8 == 0 && message.content == "8") {
-    //   //console.log(this.servo);
-    //   this.angle8 += 30;
-    //   this.servo8.to(this.angle8);
-    //   console.log(this.angle8);
-    // } else if (this.angle8 == 30 && message.content == "8") {
-    //   this.angle8 -= 30;
-    //   this.servo8.to(this.angle8);
-    //   console.log(this.angle8);
-    // }
-
-    // if (this.angle9 == 0 && message.content == "9") {
-    //   //console.log(this.servo);
-    //   this.angle9 += 30;
-    //   this.servo9.to(this.angle9);
-    //   console.log(this.angle9);
-    // } else if (this.angle9 == 30 && message.content == "9") {
-    //   this.angle9 -= 30;
-    //   this.servo9.to(this.angle9);
-    //   console.log(this.angle9);
-    // }
-
-    // if (this.angle10 == 0 && message.content == "10") {
-    //   //console.log(this.servo);
-    //   this.angle10 += 30;
-    //   this.servo10.to(this.angle10);
-    //   console.log(this.angle10);
-    // } else if (this.angle10 == 30 && message.content == "10") {
-    //   this.angle10 -= 30;
-    //   this.servo10.to(this.angle10);
-    //   console.log(this.angle10);
-    // }
-
-    // if (this.angle11 == 0 && message.content == "11") {
-    //   //console.log(this.servo);
-    //   this.angle11 += 30;
-    //   this.servo11.to(this.angle11);
-    //   console.log(this.angle11);
-    // } else if (this.angle11 == 30 && message.content == "11") {
-    //   this.angle11 -= 30;
-    //   this.servo11.to(this.angle11);
-    //   console.log(this.angle11);
-    // }
-
-    // if (this.angle12 == 0 && message.content == "12") {
-    //   //console.log(this.servo);
-    //   this.angle12 += 30;
-    //   this.servo12.to(this.angle12);
-    //   console.log(this.angle12);
-    // } else if (this.angle12 == 30 && message.content == "12") {
-    //   this.angle12 -= 30;
-    //   this.servo12.to(this.angle12);
-    //   console.log(this.angle12);
-    // }
 
     //BUTTON RESPONSE
 
@@ -431,14 +180,32 @@ class DiscordBotServos {
     //   console.log("down");
     // });
 
-
     // if (message.content == "help") {
     //   const answer = "je ne suis pas disponible pour le moment";
     //   message.channel.send(answer);
     // }
-
-
   }
+
+  async playChar(char) {
+    const table = {
+      "😀": 0,
+      1: 1,
+      2: 2,
+      3: 3,
+    };
+
+    if (!(char in table)) return;
+
+    const servoIndex = table[char];
+    this.swipeToOppositeSide(servoIndex);
+    await delay(1000);
+  }
+}
+
+async function delay(millis = 0) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, millis);
+  });
 }
 
 module.exports = { DiscordBotServos };
