@@ -95,7 +95,8 @@ class DiscordBotServos {
     }
   }
 
-  swipeToOppositeSide(servoIndex, min = 0, max = 180) {
+  // swipeToOppositeSide(servoIndex, min = 0, max = 180) {
+     swipeToOppositeSide(servoIndex, min = 70, max = 110) {
     const currAngle = this.getAngle(servoIndex);
     const angle = currAngle > 90 ? min : max;
     this.toAngle(servoIndex, angle);
@@ -130,7 +131,7 @@ class DiscordBotServos {
         await this.arpeggio([0, 2, 4, 7]);
         break;
       case this.users[1]:
-        await this.arpeggio([1, 3, 5, 8]);
+         await this.arpeggio([1, 3, 5, 8]);
         break;
       case this.users[2]:
         await this.arpeggio([2, 4, 6, 9]);
@@ -150,18 +151,50 @@ class DiscordBotServos {
       return;
     }
 
+    if (message.content === "test1") {
+      this.arpeggio([1, 1, 1, 1]);
+      return;
+    }
+
+    if (message.content === "test3") {
+      this.arpeggio([3, 3, 3, 3]);
+      return;
+    }
+
+    if (message.content === "test5") {
+      this.arpeggio([5, 5, 5, 5]);
+      return;
+    }
+    
+    if (message.content === "test8") {
+      this.arpeggio([8, 8, 8,8]);
+      return;
+    }
+
     if (message.content === "reset") {
-      this.servos.each((servo, index) => this.toAngle(servoIndex, 90));
+       this.servos.each((servoIndex, index) => this.toAngle(servoIndex, 90));
+      // for(let i=0;i<this.servos.length;i++){
+      //   this.servos[i].to(90);
+      //   this.enabled = true;
+      // }
       return;
     }
 
     if (message.content === "min") {
-        this.servos.each((servo, index) => this.toAngle(servoIndex, 0));
+         this.servos.each((servoIndex, index) => this.toAngle(servoIndex, 0));
+        // for(let i=0;i<this.servos.length;i++){
+        //   this.servos[i].min();
+        //   this.enabled = true;
+        // }
       return;
     }
 
     if (message.content === "max") {
-      this.servos.each((servo, index) => this.toAngle(servoIndex, 180));
+       this.servos.each((servoIndex, index) => this.toAngle(servoIndex, 180));
+      // for(let i=0;i<this.servos.length;i++){
+      //   this.servos[i].max();
+      //   this.enabled = true;
+      // }
       return;
     }
 
