@@ -76,14 +76,16 @@ class DiscordBotServos {
       { pin: 6, invert: true, range: [MIN, MAX] },
       { pin: 7, range: [MIN, MAX] },
       { pin: 8, invert: true, range: [MIN, MAX] },
-      { pin: 9, range: [MIN, MAX] },
+      { pin: 9, range: [MIN, MAX ] },
       { pin: 10, invert: true, range: [MIN, MAX] },
       { pin: 11, range: [MIN, MAX] },
       { pin: 12, invert: true, range: [MIN, MAX] },
       { pin: 13, range: [MIN, MAX] },
     ]);
 
-    this.angles = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90];
+
+    this.angles = [MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN];
+    // this.angles = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90];
 
     this.button.on("down", () => {
       if (this.enabled) {
@@ -190,19 +192,21 @@ class DiscordBotServos {
 
     switch (messageInfo.author) {
       case this.users[0]:
-        await this.arpeggio([11, 9, 7, 4]);
+        // await this.arpeggio([11, 9, 7, 4]);
+        await this.arpeggioDelay([11, 1000, 9, 800, 7, 600, 4,2500]);
         break;
       case this.users[1]:
-        await this.arpeggioDelay([MI1, 1000, SOL1, 800, SI1, 600, MI2, 1000]);
+        await this.arpeggioDelay([MI1, 1000, SOL1, 800, SI1, 600, MI2, 2500]);
         break;
       case this.users[2]:
-        await this.arpeggio([9, 7, 5, 2]);
+        // await this.arpeggio([9, 7, 5, 2]);
+        await this.arpeggioDelay([9,1000, 7,800, 5,600, 2,2500]);
         break;
       case this.users[3]:
-        await this.arpeggio([8, 6, 4, 1]);
+        await this.arpeggio([8,1000, 6, 800, 4, 600, 1,2500]);
         break;
       case this.users[4]:
-        await this.arpeggio([7, 5, 3, 0]);
+        await this.arpeggio([7,1000, 5,800, 3,600, 0,2500]);
         break;
     }
 
@@ -221,7 +225,7 @@ class DiscordBotServos {
 
     if (message.content === "user4") return this.arpeggio([7, 5, 3, 0]);
 
-    if (message.content === "melodie") {
+    if (message.content === "🎉") {
       //prettier-ignore
       await this.arpeggio([SI1, SI1, DO2, RE2, RE2, DO2, SI1, LA1, SOL1, SOL1, LA1, SI1, SI1, LA1, LA1]);
       await delay(1000);
@@ -266,18 +270,18 @@ class DiscordBotServos {
 
   async playChar(char) {
     const table = {
-      "😀": 0,
-      "👍": 1,
-      2: 2,
-      3: 3,
-      4: 4,
-      5: 5,
-      6: 6,
-      7: 7,
-      8: 8,
-      9: 9,
-      10: 10,
-      11: 11,
+      "😂": 0,
+      "😭": 1,
+      "🥺": 2,
+      "🤣": 3,
+      "👏": 4,
+      "👍": 5,
+      "❤️": 6,
+      "✨": 7,
+      "😍": 8,
+      "😊": 9,
+      "❓": 10,
+      "❗️": 11,
     };
 
     if (!(char in table)) return;
