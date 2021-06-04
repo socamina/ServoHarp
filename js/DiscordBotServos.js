@@ -34,7 +34,12 @@ class DiscordBotServos {
 
     const channel = this.client.channels.cache.get("836975500525174804");
 
-    this.button = new Button(14);
+    // this.button = new Button(14);
+
+    this.button = new Button({
+      pin: 14,
+      isPullup: true
+    });
 
     this.servos = new Servos([
       { pin: 2, invert: true },
@@ -88,15 +93,15 @@ class DiscordBotServos {
     console.log(this.users);
   }
 
-  async arpeggio(accord, { duration = 800 } = {}) {
+  async arpeggio(accord, { duration = 600 } = {}) {
     for (let servoIndex of accord) {
       this.swipeToOppositeSide(servoIndex);
       await delay(duration);
     }
   }
 
-  // swipeToOppositeSide(servoIndex, min = 0, max = 180) {
-     swipeToOppositeSide(servoIndex, min = 70, max = 110) {
+  //swipeToOppositeSide(servoIndex, min = 0, max = 180) {
+     swipeToOppositeSide(servoIndex, min =65, max = 104) {
     const currAngle = this.getAngle(servoIndex);
     const angle = currAngle > 90 ? min : max;
     this.toAngle(servoIndex, angle);
@@ -128,26 +133,69 @@ class DiscordBotServos {
 
     switch (messageInfo.author) {
       case this.users[0]:
-        await this.arpeggio([0, 2, 4, 7]);
+        await this.arpeggio([11,9,7,4]);
         break;
       case this.users[1]:
-         await this.arpeggio([1, 3, 5, 8]);
+        //await this.arpeggio([10, 8, 6, 3]);
         break;
       case this.users[2]:
-        await this.arpeggio([2, 4, 6, 9]);
+        await this.arpeggio([9,7,5,2]);
         break;
       case this.users[3]:
-        await this.arpeggio([3, 5, 7, 10]);
+        await this.arpeggio([8,6,4,1]);
         break;
       case this.users[4]:
-        await this.arpeggio([4, 6, 8, 11]);
+        await this.arpeggio([7, 5, 3, 0]);
         break;
     }
 
     // EMOJI BIT
 
-    if (message.content === "test11") {
-      this.arpeggio([11, 11, 11, 11]);
+    if (message.content === "all") {
+      this.arpeggio([0,1,2,3, 4,5,6, 7,8,9,10,11]);
+      return;
+    }
+
+
+    if (message.content === "user0") {
+      this.arpeggio([11,9,7,4]);
+      return;
+    }
+
+    if (message.content === "user1") {
+      this.arpeggio([10, 8, 6, 3]);
+      return;
+    }
+
+    if (message.content === "user2") {
+      this.arpeggio([9,7,5,2]);
+      return;
+    }
+
+    if (message.content === "user3") {
+      this.arpeggio([8,6,4,1]);
+      return;
+    }
+
+    if (message.content === "user4") {
+      this.arpeggio([7, 5, 3, 0]);
+      return;
+    }
+
+    // if (message.content === "melodie") {
+    //   this.arpeggio([6,6,5,4,4,5,6,7,8,8,7,6,6,7,7 ]);
+    //   return;
+    // }
+
+      if (message.content === "melodie") {
+       this.arpeggio([6,6,5,4,4,5,6,7,8,8,7,6,6,7,7, 6,6,5,4,4,5,6,7,8,8,7,6,7,8,8 ]);
+    //   //si si do re re do si la sol sol la si la la, si si do re re do si la sol sol la si la sol sol
+    //   // la la si sol la si do si sol, la si do si la sol la re
+      return;
+     }
+
+    if (message.content === "test0") {
+      this.arpeggio([0,0,0,0]);
       return;
     }
 
@@ -155,9 +203,17 @@ class DiscordBotServos {
       this.arpeggio([1, 1, 1, 1]);
       return;
     }
-
+    if (message.content === "test2") {
+      this.arpeggio([2, 2, 2,2]);
+      return;
+    }
     if (message.content === "test3") {
       this.arpeggio([3, 3, 3, 3]);
+      return;
+    }
+
+    if (message.content === "test4") {
+      this.arpeggio([4,4,4,4]);
       return;
     }
 
@@ -166,8 +222,32 @@ class DiscordBotServos {
       return;
     }
     
+    if (message.content === "test6") {
+      this.arpeggio([6,6,6,6]);
+      return;
+    }
+    if (message.content === "test7") {
+      this.arpeggio([7,7,7,7]);
+      return;
+    }
+
     if (message.content === "test8") {
       this.arpeggio([8, 8, 8,8]);
+      return;
+    }
+
+    if (message.content === "test9") {
+      this.arpeggio([9,9,9,9]);
+      return;
+    }
+
+    if (message.content === "test10") {
+      this.arpeggio([10, 10, 10, 10]);
+      return;
+    }
+
+    if (message.content === "test11") {
+      this.arpeggio([11, 11, 11, 11]);
       return;
     }
 
@@ -203,17 +283,6 @@ class DiscordBotServos {
     for (let char of chars) {
       await this.playChar(char);
     }
-
-    //BUTTON RESPONSE
-
-    // button.on("down", function() {
-    //   console.log("down");
-    // });
-
-    // if (message.content == "help") {
-    //   const answer = "je ne suis pas disponible pour le moment";
-    //   message.channel.send(answer);
-    // }
   }
 
   async playChar(char) {
