@@ -1,5 +1,26 @@
 const { Client, MessageEmbed } = require("discord.js");
+const { split } = require("emoji-aware");
 const { Board, Servo, Button, Servos } = require("johnny-five");
+
+const MIN = 65;
+const MAX = 104;
+
+let KILL = false;
+
+const { RE1, MI1, FA1, SOL1, LA1, SI1, DO2, RE2, MI2, FA2, SOL2, LA2 } = {
+  RE1: 11,
+  MI1: 10,
+  FA1: 9,
+  SOL1: 8,
+  LA1: 7,
+  SI1: 6,
+  DO2: 5,
+  RE2: 4,
+  MI2: 3,
+  FA2: 2,
+  SOL2: 1,
+  LA2: 0,
+};
 
 class DiscordBotServos {
   constructor(token, win) {
@@ -15,7 +36,13 @@ class DiscordBotServos {
     this.board;
     this.enabled = false;
     this.button;
-    this.replies = ["Je suis indisponible pour le moment, je répond après.","J'arrive","Attendez, je vous répond plus tard","J'ai pas le temps de vous lire maintenant","Je suis occupée"];
+    this.replies = [
+      "Je suis indisponible pour le moment, je répond après.",
+      "J'arrive",
+      "Attendez, je vous répond plus tard",
+      "J'ai pas le temps de vous lire maintenant",
+      "Je suis occupée",
+    ];
     this.initArduino();
   }
 
@@ -38,29 +65,30 @@ class DiscordBotServos {
 
     this.button = new Button({
       pin: 14,
-      isPullup: true
+      isPullup: true,
     });
 
     this.servos = new Servos([
-      { pin: 2, invert: true },
-      { pin: 3 },
-      { pin: 4, invert: true },
-      { pin: 5 },
-      { pin: 6, invert: true },
-      { pin: 7 },
-      { pin: 8, invert: true },
-      { pin: 9 },
-      { pin: 10, invert: true },
-      { pin: 11 },
-      { pin: 12, invert: true },
-      { pin: 13 },
+      { pin: 2, invert: true, range: [MIN, MAX] }, //
+      { pin: 3, range: [MIN, MAX] },
+      { pin: 4, invert: true, range: [MIN, MAX] },
+      { pin: 5, range: [MIN, MAX] },
+      { pin: 6, invert: true, range: [MIN, MAX] },
+      { pin: 7, range: [MIN, MAX] },
+      { pin: 8, invert: true, range: [MIN, MAX] },
+      { pin: 9, range: [MIN, MAX] },
+      { pin: 10, invert: true, range: [MIN, MAX] },
+      { pin: 11, range: [MIN, MAX] },
+      { pin: 12, invert: true, range: [MIN, MAX] },
+      { pin: 13, range: [MIN, MAX] },
     ]);
 
     this.angles = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90];
 
     this.button.on("down", () => {
       if (this.enabled) {
-        var randomReply = this.replies[Math.floor(Math.random()*this.replies.length)];
+        var randomReply =
+          this.replies[Math.floor(Math.random() * this.replies.length)];
         channel.send(randomReply);
       } else {
         console.log("button enabled");
@@ -94,14 +122,24 @@ class DiscordBotServos {
   }
 
   async arpeggio(accord, { duration = 600 } = {}) {
+    KILL = false;
+
     for (let servoIndex of accord) {
       this.swipeToOppositeSide(servoIndex);
+      // if (KILL) break;
       await delay(duration);
+      // if (KILL) break;
     }
   }
 
-  //swipeToOppositeSide(servoIndex, min = 0, max = 180) {
-     swipeToOppositeSide(servoIndex, min =65, max = 104) {
+  async testServo(servoIndex) {
+    const nRepeat = 4;
+    const arp = Array(nRepeat).fill(servoIndex);
+
+    await this.arpeggio(arp);
+  }
+
+  swipeToOppositeSide(servoIndex, min = 0, max = 180) {
     const currAngle = this.getAngle(servoIndex);
     const angle = currAngle > 90 ? min : max;
     this.toAngle(servoIndex, angle);
@@ -121,6 +159,19 @@ class DiscordBotServos {
     this.servos[servoIndex].to(angle);
   }
 
+  async arpeggioDelay(accordAndDelays, { duration = 0 } = {}) {
+    KILL = false;
+
+    for (let value of accordAndDelays) {
+      if (value > 20) {
+        await delay(value);
+      } else {
+        this.swipeToOppositeSide(value);
+        await delay(duration);
+      }
+    }
+  }
+
   async onMessage(message) {
     var messageInfo = {
       content: message.content,
@@ -129,20 +180,26 @@ class DiscordBotServos {
 
     this.win.webContents.send("messageDiscord", messageInfo);
 
+    // if (message.content === "kill") {
+    //   KILL = true;
+    //   this.servos.each((servo, index) => this.toAngle(index, 90));
+    //   return;
+    // }
+
     // ARPEGGIO BIT
 
     switch (messageInfo.author) {
       case this.users[0]:
-        await this.arpeggio([11,9,7,4]);
+        await this.arpeggio([11, 9, 7, 4]);
         break;
       case this.users[1]:
-        //await this.arpeggio([10, 8, 6, 3]);
+        await this.arpeggioDelay([MI1, 1000, SOL1, 800, SI1, 600, MI2, 1000]);
         break;
       case this.users[2]:
-        await this.arpeggio([9,7,5,2]);
+        await this.arpeggio([9, 7, 5, 2]);
         break;
       case this.users[3]:
-        await this.arpeggio([8,6,4,1]);
+        await this.arpeggio([8, 6, 4, 1]);
         break;
       case this.users[4]:
         await this.arpeggio([7, 5, 3, 0]);
@@ -151,134 +208,56 @@ class DiscordBotServos {
 
     // EMOJI BIT
 
-    if (message.content === "all") {
-      this.arpeggio([0,1,2,3, 4,5,6, 7,8,9,10,11]);
+    if (message.content === "all")
+      return this.arpeggio([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+
+    if (message.content === "user0") return this.arpeggio([11, 9, 7, 4]);
+
+    if (message.content === "user1") return this.arpeggio([10, 8, 6, 3]);
+
+    if (message.content === "user2") return this.arpeggio([9, 7, 5, 2]);
+
+    if (message.content === "user3") return this.arpeggio([8, 6, 4, 1]);
+
+    if (message.content === "user4") return this.arpeggio([7, 5, 3, 0]);
+
+    if (message.content === "melodie") {
+      //prettier-ignore
+      await this.arpeggio([SI1, SI1, DO2, RE2, RE2, DO2, SI1, LA1, SOL1, SOL1, LA1, SI1, SI1, LA1, LA1]);
+      await delay(1000);
+      //prettier-ignore
+      await this.arpeggio([SI1, SI1, DO2, RE2, RE2, DO2, SI1, LA1, SOL1, SOL1, LA1, SI1, LA1, SOL1, SOL1]);
       return;
     }
 
+    const testMap = {
+      test0: 0,
+      test1: 1,
+      test2: 2,
+      test3: 3,
+      test4: 4,
+      test5: 5,
+      test6: 6,
+      test7: 7,
+      test8: 8,
+      test9: 9,
+      test10: 10,
+      test11: 11,
+    };
 
-    if (message.content === "user0") {
-      this.arpeggio([11,9,7,4]);
-      return;
-    }
+    if (message.content in testMap)
+      return this.testServo(testMap[message.content]);
 
-    if (message.content === "user1") {
-      this.arpeggio([10, 8, 6, 3]);
-      return;
-    }
+    if (message.content === "reset")
+      return this.servos.each((servo, index) => this.toAngle(index, 90));
 
-    if (message.content === "user2") {
-      this.arpeggio([9,7,5,2]);
-      return;
-    }
+    if (message.content === "min")
+      return this.servos.each((servo, index) => this.toAngle(index, 0));
 
-    if (message.content === "user3") {
-      this.arpeggio([8,6,4,1]);
-      return;
-    }
+    if (message.content === "max")
+      return this.servos.each((servo, index) => this.toAngle(index, 180));
 
-    if (message.content === "user4") {
-      this.arpeggio([7, 5, 3, 0]);
-      return;
-    }
-
-    // if (message.content === "melodie") {
-    //   this.arpeggio([6,6,5,4,4,5,6,7,8,8,7,6,6,7,7 ]);
-    //   return;
-    // }
-
-      if (message.content === "melodie") {
-       this.arpeggio([6,6,5,4,4,5,6,7,8,8,7,6,6,7,7, 6,6,5,4,4,5,6,7,8,8,7,6,7,8,8 ]);
-    //   //si si do re re do si la sol sol la si la la, si si do re re do si la sol sol la si la sol sol
-    //   // la la si sol la si do si sol, la si do si la sol la re
-      return;
-     }
-
-    if (message.content === "test0") {
-      this.arpeggio([0,0,0,0]);
-      return;
-    }
-
-    if (message.content === "test1") {
-      this.arpeggio([1, 1, 1, 1]);
-      return;
-    }
-    if (message.content === "test2") {
-      this.arpeggio([2, 2, 2,2]);
-      return;
-    }
-    if (message.content === "test3") {
-      this.arpeggio([3, 3, 3, 3]);
-      return;
-    }
-
-    if (message.content === "test4") {
-      this.arpeggio([4,4,4,4]);
-      return;
-    }
-
-    if (message.content === "test5") {
-      this.arpeggio([5, 5, 5, 5]);
-      return;
-    }
-    
-    if (message.content === "test6") {
-      this.arpeggio([6,6,6,6]);
-      return;
-    }
-    if (message.content === "test7") {
-      this.arpeggio([7,7,7,7]);
-      return;
-    }
-
-    if (message.content === "test8") {
-      this.arpeggio([8, 8, 8,8]);
-      return;
-    }
-
-    if (message.content === "test9") {
-      this.arpeggio([9,9,9,9]);
-      return;
-    }
-
-    if (message.content === "test10") {
-      this.arpeggio([10, 10, 10, 10]);
-      return;
-    }
-
-    if (message.content === "test11") {
-      this.arpeggio([11, 11, 11, 11]);
-      return;
-    }
-
-    if (message.content === "reset") {
-       this.servos.each((servoIndex, index) => this.toAngle(servoIndex, 90));
-      // for(let i=0;i<this.servos.length;i++){
-      //   this.servos[i].to(90);
-      //   this.enabled = true;
-      // }
-      return;
-    }
-
-    if (message.content === "min") {
-         this.servos.each((servoIndex, index) => this.toAngle(servoIndex, 0));
-        // for(let i=0;i<this.servos.length;i++){
-        //   this.servos[i].min();
-        //   this.enabled = true;
-        // }
-      return;
-    }
-
-    if (message.content === "max") {
-       this.servos.each((servoIndex, index) => this.toAngle(servoIndex, 180));
-      // for(let i=0;i<this.servos.length;i++){
-      //   this.servos[i].max();
-      //   this.enabled = true;
-      // }
-      return;
-    }
-
-    const chars = message.content.split(""); // split into characters (letters, emoji, punctuation)
+    const chars = split(message.content); // split into characters (letters, emoji, punctuation)
 
     for (let char of chars) {
       await this.playChar(char);
@@ -288,17 +267,17 @@ class DiscordBotServos {
   async playChar(char) {
     const table = {
       "😀": 0,
-      1: 1,
+      "👍": 1,
       2: 2,
       3: 3,
-      4:4,
-      5:5,
-      6:6,
-      7:7,
-      8:8,
-      9:9,
-      "dix":10,
-      "onze":11,
+      4: 4,
+      5: 5,
+      6: 6,
+      7: 7,
+      8: 8,
+      9: 9,
+      10: 10,
+      11: 11,
     };
 
     if (!(char in table)) return;

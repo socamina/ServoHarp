@@ -6,6 +6,7 @@
   "dependencies": {
     "discord.js": "^12.5.1",
     "electron-squirrel-startup": "^1.0.0",
+    "emoji-aware": "^3.0.5",
     "johnny-five": "^2.0.0",
     "node-abi": "^2.20.0",
     "robotjs": "^0.6.0",
