@@ -289,7 +289,7 @@ class DiscordBotServos {
     const servoIndex = table[char];
     this.swipeToOppositeSide(servoIndex);
     await delay(1000);
-  }
+  } 
 }
 
 async function delay(millis = 0) {
