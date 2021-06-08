@@ -12,7 +12,17 @@ class AppServos {
 
   onMessage(event, message) {
 
-    document.body.innerHTML = message.content;
+    var msgLength = message.content.length * 1.7;
+    if(msgLength > 10){
+      msgLength = message.content.length/2;
+    }
+    console.log(message);
+    var msgDiscord = document.getElementById("msgDiscord");
+    var divWidth = document.getElementById("msgContainer").offsetWidth;
+    console.log(divWidth/msgLength);
+
+    msgDiscord.style.fontSize = divWidth/msgLength + "px";
+    msgDiscord.innerHTML = message.content;
 
     if(message.content == "tonemoji"){
       document.body.classList.add("isBot");

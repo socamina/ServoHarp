@@ -3,7 +3,7 @@ const { split } = require("emoji-aware");
 const { Board, Servo, Button, Servos } = require("johnny-five");
 
 const MIN = 65;
-const MAX = 104;
+const MAX = 103;
 
 let KILL = false;
 
@@ -76,13 +76,12 @@ class DiscordBotServos {
       { pin: 6, invert: true, range: [MIN, MAX] },
       { pin: 7, range: [MIN, MAX] },
       { pin: 8, invert: true, range: [MIN, MAX] },
-      { pin: 9, range: [MIN, MAX ] },
+      { pin: 9, range: [MIN, MAX] },
       { pin: 10, invert: true, range: [MIN, MAX] },
       { pin: 11, range: [MIN, MAX] },
       { pin: 12, invert: true, range: [MIN, MAX] },
       { pin: 13, range: [MIN, MAX] },
     ]);
-
 
     this.angles = [MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN];
     // this.angles = [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90];
@@ -143,6 +142,7 @@ class DiscordBotServos {
 
   swipeToOppositeSide(servoIndex, min = 0, max = 180) {
     const currAngle = this.getAngle(servoIndex);
+    // const angle = currAngle > 90 ? MIN : MAX;
     const angle = currAngle > 90 ? min : max;
     this.toAngle(servoIndex, angle);
   }
@@ -188,25 +188,45 @@ class DiscordBotServos {
     //   return;
     // }
 
-    // ARPEGGIO BIT
+    // USER BIT
 
     switch (messageInfo.author) {
       case this.users[0]:
         // await this.arpeggio([11, 9, 7, 4]);
-        await this.arpeggioDelay([11, 1000, 9, 800, 7, 600, 4,2500]);
+        await this.arpeggioDelay([0, 650, 0, 650, 0, 650, 0, 1500]);
         break;
       case this.users[1]:
-        await this.arpeggioDelay([MI1, 1000, SOL1, 800, SI1, 600, MI2, 2500]);
+         await this.arpeggioDelay([1, 650, 1, 650, 1, 650, 1, 1500]);
         break;
       case this.users[2]:
-        // await this.arpeggio([9, 7, 5, 2]);
-        await this.arpeggioDelay([9,1000, 7,800, 5,600, 2,2500]);
+      // await this.arpeggioDelay([2, 650, 2, 650, 2, 650, 2, 1500]);
         break;
       case this.users[3]:
-        await this.arpeggio([8,1000, 6, 800, 4, 600, 1,2500]);
+        await this.arpeggioDelay([3, 650, 3, 650, 3, 650, 3,  1500]);
         break;
       case this.users[4]:
-        await this.arpeggio([7,1000, 5,800, 3,600, 0,2500]);
+        await this.arpeggioDelay([4, 650, 4, 650, 4, 650, 4,  1500]);
+        break;
+      case this.users[5]:
+        await this.arpeggioDelay([5, 650, 5, 650, 5, 650, 5,  1500]);
+        break;
+      case this.users[6]:
+        await this.arpeggioDelay([6, 650, 6, 650, 6, 650, 6,  1500]);
+        break;
+      case this.users[7]:
+        await this.arpeggioDelay([7, 650, 7, 650, 7, 650, 7,  1500]);
+        break;
+      case this.users[8]:
+        await this.arpeggioDelay([8, 650, 8, 650, 8, 650, 8,  1500]);
+        break;
+      case this.users[9]:
+        await this.arpeggioDelay([9, 650, 9, 650, 9, 650, 9,  1500]);
+        break;
+      case this.users[10]:
+        await this.arpeggioDelay([10, 650, 10, 650, 10, 650, 10,  1500]);
+        break;
+      case this.users[11]:
+        await this.arpeggioDelay([11, 650, 11, 650, 11, 650, 11,  1500]);
         break;
     }
 
@@ -215,15 +235,15 @@ class DiscordBotServos {
     if (message.content === "all")
       return this.arpeggio([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 
-    if (message.content === "user0") return this.arpeggio([11, 9, 7, 4]);
+    if (message.content === "👍") return this.arpeggio([11, 9, 7, 4]);
 
-    if (message.content === "user1") return this.arpeggio([10, 8, 6, 3]);
+    if (message.content === "😂") return this.arpeggio([10, 8, 6, 3]);
 
-    if (message.content === "user2") return this.arpeggio([9, 7, 5, 2]);
+    if (message.content === "😭") return this.arpeggio([9, 7, 5, 2]);
 
-    if (message.content === "user3") return this.arpeggio([8, 6, 4, 1]);
+    if (message.content === "😍" || message.content === "❤️" ) return this.arpeggioDelay([8,1000, 6,800, 4,600, 1,1500]);
 
-    if (message.content === "user4") return this.arpeggio([7, 5, 3, 0]);
+    if (message.content === "!") return this.arpeggio([7, 5, 3, 0]);
 
     if (message.content === "🎉") {
       //prettier-ignore
@@ -231,6 +251,12 @@ class DiscordBotServos {
       await delay(1000);
       //prettier-ignore
       await this.arpeggio([SI1, SI1, DO2, RE2, RE2, DO2, SI1, LA1, SOL1, SOL1, LA1, SI1, LA1, SOL1, SOL1]);
+      return;
+    }
+
+    if (message.content === "✨") {
+      //prettier-ignore
+      await this.arpeggioDelay([MI2,500,RE2,450,MI2,300,DO2,450,DO2, 650, SOL2,300,FA2,300,MI2,300,RE2,300,MI2,650, DO2,450,RE2,450,MI2,300,RE2,2450]);
       return;
     }
 
@@ -289,7 +315,7 @@ class DiscordBotServos {
     const servoIndex = table[char];
     this.swipeToOppositeSide(servoIndex);
     await delay(1000);
-  } 
+  }
 }
 
 async function delay(millis = 0) {
