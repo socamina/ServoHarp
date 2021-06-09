@@ -243,7 +243,7 @@ class DiscordBotServos {
 
     // EMOJI BIT
 
-    if (message.content === "all")
+   /* if (message.content === "all")
       return this.arpeggio([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 
     if (message.content === "👍") return this.arpeggio([11, 9, 7, 4]);
@@ -270,7 +270,7 @@ class DiscordBotServos {
       //prettier-ignore
       await this.arpeggioDelay([MI2, 400, MI2,400,RE2,400,MI2,300,DO2,400,DO2, 400, SOL2,300,FA2,300,MI2,300,RE2,300,MI2,400, DO2,400,RE2,400,MI2,400,RE2,2450]);
       return;
-    }
+    } */
 
     const cmdMap = {
       test0: 0,
@@ -338,7 +338,7 @@ class DiscordBotServos {
 
       "✨": async () => {
         //prettier-ignore
-        await this.arpeggioDelay([MI2, 300, MI2,500,RE2,450,MI2,300,DO2,450,DO2, 400, SOL2,300,FA2,300,MI2,300,RE2,300,MI2,400, DO2,450,RE2,450,MI2,450,RE2,2450]);
+        await this.arpeggioDelay([MI2, 400, MI2,500,RE2,400,MI2,250,DO2,400,DO2, 300, SOL2,250,FA2,250,MI2,250,RE2,300,MI2,400, DO2,400,RE2,450,MI2,300,RE2,2450]);
         return;
       },
     };
