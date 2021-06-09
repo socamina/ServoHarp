@@ -203,41 +203,40 @@ class DiscordBotServos {
 
     switch (messageInfo.author) {
       case this.users[0]:
-        // await this.arpeggio([11, 9, 7, 4]);
-        await this.arpeggioDelay([0, 650, 0, 650, 0, 650, 0, 1500]);
+        await this.arpeggioDelay([0, 500, 0, 500, 0, 500, 0, 1200]);
         break;
       case this.users[1]:
-        await this.arpeggioDelay([1, 650, 1, 650, 1, 650, 1, 1500]);
+        await this.arpeggioDelay([1, 500, 1, 500, 1, 500, 1, 1200]);
         break;
       case this.users[2]:
-        // await this.arpeggioDelay([2, 650, 2, 650, 2, 650, 2, 1500]);
+         await this.arpeggioDelay([2, 500, 2, 500, 2, 500, 2, 1200]);
         break;
       case this.users[3]:
-        await this.arpeggioDelay([3, 650, 3, 650, 3, 650, 3, 1500]);
+        await this.arpeggioDelay([3, 500, 3, 500, 3, 500, 3, 1200]);
         break;
       case this.users[4]:
-        await this.arpeggioDelay([4, 650, 4, 650, 4, 650, 4, 1500]);
+        await this.arpeggioDelay([4, 500, 4, 500, 4, 500, 4, 1200]);
         break;
       case this.users[5]:
-        await this.arpeggioDelay([5, 650, 5, 650, 5, 650, 5, 1500]);
+        await this.arpeggioDelay([5, 500, 5, 500, 5, 500, 5, 1200]);
         break;
       case this.users[6]:
-        await this.arpeggioDelay([6, 650, 6, 650, 6, 650, 6, 1500]);
+        await this.arpeggioDelay([6, 500, 6, 500, 6, 500, 6, 1200]);
         break;
       case this.users[7]:
-        await this.arpeggioDelay([7, 650, 7, 650, 7, 650, 7, 1500]);
+        await this.arpeggioDelay([7, 500, 7, 500, 7, 500, 7, 1200]);
         break;
       case this.users[8]:
-        await this.arpeggioDelay([8, 650, 8, 650, 8, 650, 8, 1500]);
+        await this.arpeggioDelay([8, 500, 8, 500, 8, 500, 8, 1200]);
         break;
       case this.users[9]:
-        await this.arpeggioDelay([9, 650, 9, 650, 9, 650, 9, 1500]);
+        await this.arpeggioDelay([9, 500, 9, 500, 9, 500, 9, 1200]);
         break;
       case this.users[10]:
-        await this.arpeggioDelay([10, 650, 10, 650, 10, 650, 10, 1500]);
+        await this.arpeggioDelay([10, 500, 10, 500, 10, 500, 10, 1200]);
         break;
       case this.users[11]:
-        await this.arpeggioDelay([11, 650, 11, 650, 11, 650, 11, 1500]);
+        await this.arpeggioDelay([11, 500, 11, 500, 11, 500, 11, 1200]);
         break;
     }
 
@@ -317,51 +316,51 @@ class DiscordBotServos {
   async playChar(char) {
     const table = {
       //600
-      "😡": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
-      "🤬": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
-      "😠": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
-      "🤯": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
-      "🥵": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
-      "😤": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
-      "🙄": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
+      "😡": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,200]),
+      "🤬": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,200]),
+      "😠": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,200]),
+      "🤯": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,200]),
+      "🥵": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,200]),
+      "😤": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,200]),
+      "🙄": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,200]),
 
       //500
-      "😂": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
-      "😊": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
-      "🤗": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
-      "😉": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
-      "😄": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
-      "😃": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
-      "😛": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
-      "😃": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
-      "😀": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
-      "😀": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
+      "😂": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,200]),
+      "😊": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,200]),
+      "🤗": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,200]),
+      "😉": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,200]),
+      "😄": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,200]),
+      "😃": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,200]),
+      "😛": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,200]),
+      "😃": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,200]),
+      "😀": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,200]),
+      "😀": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,200]),
+      
 
       //200
-      "😭": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
-      "💔": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
-      "😢": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
-      "😥": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
-      "😔": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
-      "😟": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
-      "😣": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
+      "😭": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,200]),
+      "💔": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,200]),
+      "😢": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,200]),
+      "😥": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,200]),
+      "😔": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,200]),
+      "😟": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,200]),
+      "😣": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,200]),
 
       //150
-      "😍": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
-      "❤️": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
-      "💗": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
-      "🥰": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
-      "😘": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
-      "❤️": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
-      "💖": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
-      "💛": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
+      "😍": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 200]),
+      "❤️": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 200]),
+      "💗": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 200]),
+      "🥰": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 200]),
+      "😘": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 200]),
+      "❤️": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 200]),
+      "💖": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 200]),
+      "💛": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 200]),
 
       //200
       "!": async () =>
-        await this.arpeggioDelay([7, 100, 5, 100, 3, 100, 0, 700]),
+        await this.arpeggioDelay([7, 100, 5, 100, 3, 100, 0, 200]),
       "?": async () =>
-        await this.arpeggioDelay([7, 100, 5, 100, 3, 100, 0, 700]),
-
+        await this.arpeggioDelay([7, 100, 5, 100, 3, 100, 0, 200]),
 
 
       //MELODIES
