@@ -243,7 +243,7 @@ class DiscordBotServos {
 
     // EMOJI BIT
 
-   /* if (message.content === "all")
+    /* if (message.content === "all")
       return this.arpeggio([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 
     if (message.content === "👍") return this.arpeggio([11, 9, 7, 4]);
@@ -316,18 +316,57 @@ class DiscordBotServos {
 
   async playChar(char) {
     const table = {
-      "👍": async () => await this.arpeggio([11, 9, 7, 4]),
-      "😂": async () => await this.arpeggio([10, 8, 6, 3]),
-      "😭": async () => await this.arpeggio([9, 7, 5, 2]),
+      //600
+      "😡": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
+      "🤬": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
+      "😠": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
+      "🤯": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
+      "🥵": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
+      "😤": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
+      "🙄": async () => await this.arpeggioDelay([11,300, 9,300, 7,300, 4,700]),
 
-      "😍": async () =>
-        await this.arpeggioDelay([8, 1000, 6, 800, 4, 600, 1, 1500]),
-      "❤️": async () =>
-        await this.arpeggioDelay([8, 1000, 6, 800, 4, 600, 1, 1500]),
+      //500
+      "😂": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
+      "😊": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
+      "🤗": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
+      "😉": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
+      "😄": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
+      "😃": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
+      "😛": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
+      "😃": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
+      "😀": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
+      "😀": async () => await this.arpeggioDelay([10,250, 8,250, 6,250, 3,700]),
 
-      "!": async () => await this.arpeggio([7, 5, 3, 0]),
+      //200
+      "😭": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
+      "💔": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
+      "😢": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
+      "😥": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
+      "😔": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
+      "😟": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
+      "😣": async () => await this.arpeggioDelay([9, 200,7,200, 5,200, 2,700]),
 
-      "🎉": async () => {
+      //150
+      "😍": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
+      "❤️": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
+      "💗": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
+      "🥰": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
+      "😘": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
+      "❤️": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
+      "💖": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
+      "💛": async () => await this.arpeggioDelay([8, 150, 6, 150, 4, 150, 1, 700]),
+
+      //200
+      "!": async () =>
+        await this.arpeggioDelay([7, 100, 5, 100, 3, 100, 0, 700]),
+      "?": async () =>
+        await this.arpeggioDelay([7, 100, 5, 100, 3, 100, 0, 700]),
+
+
+
+      //MELODIES
+//ODE
+      "✨": async () => {
         //prettier-ignore
         await this.arpeggio([SI1, SI1, DO2, RE2, RE2, DO2, SI1, LA1, SOL1, SOL1, LA1, SI1, SI1, LA1, LA1]);
         await delay(700);
@@ -335,8 +374,14 @@ class DiscordBotServos {
         await this.arpeggio([SI1, SI1, DO2, RE2, RE2, DO2, SI1, LA1, SOL1, SOL1, LA1, SI1, LA1, SOL1, SOL1]);
         return;
       },
+//WAVIN
+      "🎉": async () => {
+        //prettier-ignore
+        await this.arpeggioDelay([MI2, 400, MI2,500,RE2,400,MI2,250,DO2,400,DO2, 300, SOL2,250,FA2,250,MI2,250,RE2,300,MI2,400, DO2,400,RE2,450,MI2,300,RE2,2450]);
+        return;
+      },
 
-      "✨": async () => {
+      " 🥳": async () => {
         //prettier-ignore
         await this.arpeggioDelay([MI2, 400, MI2,500,RE2,400,MI2,250,DO2,400,DO2, 300, SOL2,250,FA2,250,MI2,250,RE2,300,MI2,400, DO2,400,RE2,450,MI2,300,RE2,2450]);
         return;
