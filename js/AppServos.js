@@ -12,7 +12,7 @@ class AppServos {
 
   onMessage(event, message) {
 
-    var msgLength = message.content.length * 1.7;
+    var msgLength = message.content.length * 3;
     if(msgLength > 10){
       msgLength = message.content.length/2;
     }

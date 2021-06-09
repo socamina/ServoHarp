@@ -367,10 +367,13 @@ class DiscordBotServos {
 //ODE
       "✨": async () => {
         //prettier-ignore
-        await this.arpeggio([SI1, SI1, DO2, RE2, RE2, DO2, SI1, LA1, SOL1, SOL1, LA1, SI1, SI1, LA1, LA1]);
-        await delay(700);
-        //prettier-ignore
-        await this.arpeggio([SI1, SI1, DO2, RE2, RE2, DO2, SI1, LA1, SOL1, SOL1, LA1, SI1, LA1, SOL1, SOL1]);
+        // await this.arpeggio([SI1, SI1, DO2, RE2, RE2, DO2, SI1, LA1, SOL1, SOL1, LA1, SI1, SI1, LA1, LA1]);
+        // await delay(700);
+        // //prettier-ignore
+        // await this.arpeggio([SI1, SI1, DO2, RE2, RE2, DO2, SI1, LA1, SOL1, SOL1, LA1, SI1, LA1, SOL1, SOL1]);
+        // return;
+
+        await this.arpeggioDelay([SI1,550, SI1,550, DO2,550, RE2,550, RE2,550, DO2,550, SI1,550, LA1,550, SOL1,580, SOL1,550, LA1,550, SI1,580, SI1,580, LA1,550, LA1,1000,SI1, 550,SI1, 550,DO2,550, RE2,550, RE2,550, DO2,550, SI1,550, LA1,550, SOL1, 580,SOL1, 550,LA1,550, SI1,550, LA1,550, SOL1,580, SOL1,2450]);
         return;
       },
 //WAVIN

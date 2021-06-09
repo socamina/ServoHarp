@@ -13,8 +13,8 @@ function createWindow() {
         },
     });
 
-    win.loadFile("indexServos.html");
-    // win.setFullScreen(true);
+   win.loadFile("indexServos.html");
+    win.setFullScreen(true);
     // win.maximize();
 }
 
