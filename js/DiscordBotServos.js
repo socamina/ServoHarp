@@ -366,28 +366,19 @@ class DiscordBotServos {
       //MELODIES
 //ODE
       "✨": async () => {
-        //prettier-ignore
-        // await this.arpeggio([SI1, SI1, DO2, RE2, RE2, DO2, SI1, LA1, SOL1, SOL1, LA1, SI1, SI1, LA1, LA1]);
-        // await delay(700);
-        // //prettier-ignore
-        // await this.arpeggio([SI1, SI1, DO2, RE2, RE2, DO2, SI1, LA1, SOL1, SOL1, LA1, SI1, LA1, SOL1, SOL1]);
-        // return;
-
         await this.arpeggioDelay([SI1,550, SI1,550, DO2,550, RE2,550, RE2,550, DO2,550, SI1,550, LA1,550, SOL1,580, SOL1,550, LA1,550, SI1,580, SI1,580, LA1,550, LA1,1000,SI1, 550,SI1, 550,DO2,550, RE2,550, RE2,550, DO2,550, SI1,550, LA1,550, SOL1, 580,SOL1, 550,LA1,550, SI1,550, LA1,550, SOL1,580, SOL1,2450]);
         return;
       },
 //WAVIN
       "🎉": async () => {
         //prettier-ignore
-        await this.arpeggioDelay([MI2, 400, MI2,500,RE2,400,MI2,250,DO2,400,DO2, 300, SOL2,250,FA2,250,MI2,250,RE2,300,MI2,400, DO2,400,RE2,450,MI2,300,RE2,2450]);
+        await this.arpeggioDelay([MI2, 500, MI2,500,RE2,500,MI2,300,DO2,500,    DO2, 300, SOL2,300,FA2,300,MI2,300,RE2,300,MI2,550, DO2,500,RE2,550,MI2,300,RE2,2450]);
         return;
       },
 
-      " 🥳": async () => {
-        //prettier-ignore
-        await this.arpeggioDelay([MI2, 400, MI2,500,RE2,400,MI2,250,DO2,400,DO2, 300, SOL2,250,FA2,250,MI2,250,RE2,300,MI2,400, DO2,400,RE2,450,MI2,300,RE2,2450]);
-        return;
-      },
+   
+        //await this.arpeggioDelay([MI2, 400, MI2,500,RE2,400,MI2,250,DO2,400,DO2, 300, SOL2,250,FA2,250,MI2,250,RE2,300,MI2,400, DO2,400,RE2,450,MI2,300,RE2,2450]);
+      
     };
 
     if (!(char in table)) return;
