@@ -71,17 +71,17 @@ class DiscordBotServos {
 
     this.servos = new Servos([
       /* 0 */ { pin: 2, invert: true, range: [MIN, MAX] },
-      /* 1 */ { pin: 3, range: [MIN, MAX] },
+      /* 1 */ { pin: 3, range: [60, 95] },
       /* 2 */ { pin: 4, invert: true, range: [MIN, MAX] },
-      /* 3 */ { pin: 5, range: [MIN, MAX] },
+      /* 3 */ { pin: 5, range: [65, 90] },
       /* 4 */ { pin: 6, invert: true, range: [MIN, MAX] },
-      /* 5 */ { pin: 7, range: [MIN, MAX] },
+      /* 5 */ { pin: 7, range: [65, 90] },
       /* 6 */ { pin: 8, invert: true, range: [MIN, MAX] },
       /* 7 */ { pin: 9, range: [65, 90] },
       /* 8 */ { pin: 10, invert: true, range: [MIN, MAX] },
-      /* 9 */ { pin: 11, range: [MIN, MAX] },
+      /* 9 */ { pin: 11, range: [65, 90] },
       /* 10 */ { pin: 12, invert: true, range: [MIN, MAX] },
-      /* 11 */ { pin: 13, range: [MIN, MAX] },
+      /* 11 */ { pin: 13, range: [65, 90] },
     ]);
 
     this.angles = [MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN, MIN];
@@ -268,7 +268,7 @@ class DiscordBotServos {
 
     if (message.content === "✨") {
       //prettier-ignore
-      await this.arpeggioDelay([MI2, 300, MI2,500,RE2,450,MI2,300,DO2,450,DO2, 400, SOL2,300,FA2,300,MI2,300,RE2,300,MI2,400, DO2,450,RE2,450,MI2,450,RE2,2450]);
+      await this.arpeggioDelay([MI2, 400, MI2,400,RE2,400,MI2,300,DO2,400,DO2, 400, SOL2,300,FA2,300,MI2,300,RE2,300,MI2,400, DO2,400,RE2,400,MI2,400,RE2,2450]);
       return;
     }
 
