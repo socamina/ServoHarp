@@ -13,7 +13,7 @@ class AppServos {
   onMessage(event, message) {
 
     var msgLength = message.content.length * 3;
-    if(msgLength > 10){
+    if(msgLength > 20){
       msgLength = message.content.length/2;
     }
     console.log(message);
@@ -29,7 +29,7 @@ class AppServos {
       setTimeout(function(){document.body.classList.remove("isBot")}, 2000);
       document.body.innerHTML = message.content;
     } 
-    if(message.content == "pong"){
+    if(message.content == "reset"){
       document.body.classList.add("isBot");
       setTimeout(function(){document.body.classList.remove("isBot")}, 2000);
       document.body.innerHTML = message.content;

@@ -203,40 +203,40 @@ class DiscordBotServos {
 
     switch (messageInfo.author) {
       case this.users[0]:
-        await this.arpeggioDelay([0, 500, 0, 500, 0, 500, 0, 1200]);
+        await this.arpeggioDelay([0, 500, 0, 500, 0, 500, 0, 1300]);
         break;
       case this.users[1]:
-        await this.arpeggioDelay([1, 500, 1, 500, 1, 500, 1, 1200]);
+        await this.arpeggioDelay([1, 500, 1, 500, 1, 500, 1, 1300]);
         break;
       case this.users[2]:
-         await this.arpeggioDelay([2, 500, 2, 500, 2, 500, 2, 1200]);
+         await this.arpeggioDelay([2, 500, 2, 500, 2, 500, 2, 1300]);
         break;
       case this.users[3]:
-        await this.arpeggioDelay([3, 500, 3, 500, 3, 500, 3, 1200]);
+        await this.arpeggioDelay([3, 500, 3, 500, 3, 500, 3, 1300]);
         break;
       case this.users[4]:
-        await this.arpeggioDelay([4, 500, 4, 500, 4, 500, 4, 1200]);
+        await this.arpeggioDelay([4, 500, 4, 500, 4, 500, 4, 1300]);
         break;
       case this.users[5]:
-        await this.arpeggioDelay([5, 500, 5, 500, 5, 500, 5, 1200]);
+        await this.arpeggioDelay([5, 500, 5, 500, 5, 500, 5, 1300]);
         break;
       case this.users[6]:
-        await this.arpeggioDelay([6, 500, 6, 500, 6, 500, 6, 1200]);
+        await this.arpeggioDelay([6, 500, 6, 500, 6, 500, 6, 1300]);
         break;
       case this.users[7]:
-        await this.arpeggioDelay([7, 500, 7, 500, 7, 500, 7, 1200]);
+        await this.arpeggioDelay([7, 500, 7, 500, 7, 500, 7, 1300]);
         break;
       case this.users[8]:
-        await this.arpeggioDelay([8, 500, 8, 500, 8, 500, 8, 1200]);
+        await this.arpeggioDelay([8, 500, 8, 500, 8, 500, 8, 1300]);
         break;
       case this.users[9]:
-        await this.arpeggioDelay([9, 500, 9, 500, 9, 500, 9, 1200]);
+        await this.arpeggioDelay([9, 500, 9, 500, 9, 500, 9, 1300]);
         break;
       case this.users[10]:
-        await this.arpeggioDelay([10, 500, 10, 500, 10, 500, 10, 1200]);
+        await this.arpeggioDelay([10, 500, 10, 500, 10, 500, 10, 1300]);
         break;
       case this.users[11]:
-        await this.arpeggioDelay([11, 500, 11, 500, 11, 500, 11, 1200]);
+        await this.arpeggioDelay([11, 500, 11, 500, 11, 500, 11, 1300]);
         break;
     }
 

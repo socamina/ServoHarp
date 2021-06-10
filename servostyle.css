@@ -31,6 +31,7 @@
     .isBot{
         background-color: black;
         font-size : 100px;
+        color: black;
         animation: bigger 1.5s  ease-in;  
     }
 
@@ -42,6 +43,7 @@
       .isBot2{
         background-color: black;
         font-size : 150px;
+        color: black;
         animation: little 1.5s  ease-in;  
     }
 
